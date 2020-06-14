@@ -18,13 +18,16 @@ var questions = [
     {
         question: "Avery useful tool used during development and debugging for printing content to the debugger is:",
         choices: ["1.JavaScript", "2.terminal/bash", "3.for loops", "4.console.log"],
-        answer: "4.console.log" 
+        answer: "4.console.log"
     }
 ]
 var btnEl1 = document.createElement('button');
 var btnEl2 = document.createElement('button');
 var btnEl3 = document.createElement('button');
 var btnEl4 = document.createElement('button');
+var titleEl = document.getElementById("question-title");
+// titleEl.textContent = currentQuestion.question;
+
 // variables for timer
 var body = document.body;
 var timerEl = document.getElementById("countdown");
@@ -35,26 +38,15 @@ var highEl = document.getElementById("high");
 
 //Start the game with score 0.
 var score = 0;
-// var correct = function() {
-//     score += 20;
-//     index++;
-//     start();
-// }
-
-// var incorrect = function() {
-//     score -= 15;
-//     index++;
-//     start();
-// }
+var timeLeft = 75;
 var index = 0;
-
 //Start- I look some refence in github for this functions in https://wendyhub.github.io/code-quiz/#
 var endGame = function () {
     // clearInterval(timeInterval);
 
     var result = `
     <h2>End Game</h2>
-    <h3>Your score is ` + score +`</h3>
+    <h3>Your score is ` + score + `</h3>
     <input type="text" id="name" placeholder="Initials"> 
     <button onclick="setScore()">Save</button>`;
 
@@ -67,7 +59,7 @@ var endGame = function () {
 
 function setScore() {
     localStorage.setItem("highscore", score);
-    localStorage.setItem("highscoreName",  document.getElementById('name').value);
+    localStorage.setItem("highscoreName", document.getElementById('name').value);
     getScore();
 }
 
@@ -85,63 +77,68 @@ function getScore() {
 }
 //End- I look some refence in github for this functions in https://wendyhub.github.io/code-quiz/#
 
-var start = function() {
-    
-    var h2El = document.getElementById('title')
-    
-    h2El.textContent = questions[index].question;
-    btnEl1.textContent = questions[index].choices[0];
-    btnEl2.textContent = questions[index].choices[1];
-    btnEl3.textContent = questions[index].choices[2];
-    btnEl4.textContent = questions[index].choices[3];
-    body.appendChild(btnEl1);
-    body.appendChild(btnEl2);
-    body.appendChild(btnEl3);
-    body.appendChild(btnEl4);
-    
-    
-    var next = function(e) {
-        console.log(e);
-        var answer = e.target.textContent;
-        console.log(answer, questions[index].answer)
-        if(answer == questions[index].answer) {
-            score += 20;
-            console.log(score);
-        } else {
-            score -= 15;
-            console.log(score)
-        }
-        if(index < questions.length -1) {
-            index++;
-            start() 
-        } else {
-            endGame()
-        } 
-    }
-    btnEl1.addEventListener("click", next)
-    btnEl2.addEventListener("click", next)
-    btnEl3.addEventListener("click", next)
-    btnEl4.addEventListener("click", next)
-   
+function getQuestion() {
+    var currentQuestion = questions[index];
+
+    var title = document.getElementById('question-title')
+    title.textContent = currentQuestion.question
+
+    choices.innerHTML = ''
+
+    currentQuestion.choices.forEach(function (choice, i) {
+        var choiceBut = document.createElement('button');
+        choiceBut.setAttribute('class', 'choice');
+        choiceBut.setAttribute('value', choice)
+
+        choiceBut.textContent = choice;
+
+        choiceBut.onclick = questionClick;
+
+        choices.appendChild(choiceBut);
+    })
 }
 
-var time = function() {
-    var timeLeft = 75;
+function questionClick() {
+    console.log(questions[index].answer, this.value);
+    if (this.value !== questions[index].answer) {
+        timeLeft -= 15;
+        score -= 25;
+        console.log(score)
+        if (timeLeft < 0) {
+            timeLeft = 0;
+        }
+        timerEl.textContent = timeLeft;
+
+    }else{
+        score += 25
+        console.log(score)
+    }
+    index++
+
+    if (index === questions.length) {
+        endGame()
+    }
+    else {
+        getQuestion()
+    }
+}
+
+var time = function () {
 
     var timeInterval = setInterval(function () {
-        timerEl.textContent = "Time: " + timeLeft ;
+        timerEl.textContent = "Time: " + timeLeft;
         timeLeft--;
-    
+
         if (timeLeft === 0) {
-          timerEl.textContent = "Time: 0";
-          endGame();
-          clearInterval(timeInterval);
+            timerEl.textContent = "Time: 0";
+            endGame();
+            clearInterval(timeInterval);
         }
-    
+
     }, 1000);
     document.getElementById("quiz").remove();
     document.getElementById("paragraph").remove();
-    start();
+    getQuestion();
 };
 
 
