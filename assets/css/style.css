@@ -1,0 +1,36 @@
+
+header {
+    align-items: baseline;
+}
+header a {
+    font-size: 20px;
+    margin: 50px 0px 0px 30px;
+}
+.timer {
+    text-align: right;
+    font-size: 20px;
+    margin: -22px 50px 100px 0px;
+}
+section {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+section h2 {
+    font-size: 50px;
+}
+section p {
+    font-size: 20px;
+}
+
+button {
+    border-radius: 10px;
+    color: white;
+    background-color: purple;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    transform: translate(100,0);
+    margin: 0px 20px 0px 0px;
+}
+
