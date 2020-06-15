@@ -1,7 +1,7 @@
 # Quiz
 
 # Purpose
-A website is create a Code quiz.
+A website is make a Code quiz.
 
 ## Built with 
 * HTML
