@@ -42,19 +42,16 @@ var timeLeft = 75;
 var index = 0;
 //Start- I look some refence in github for this functions in https://wendyhub.github.io/code-quiz/#
 var endGame = function () {
-    // clearInterval(timeInterval);
+    timeLeft = clearInterval(timerEl.textContent = "Time: 0");
 
     var result = `
     <h2>End Game</h2>
     <h3>Your score is ` + score + `</h3>
     <input type="text" id="name" placeholder="Initials"> 
-    <button onclick="setScore()">Save</button>`;
+    <button onclick="setScore()">Submit</button>`;
 
     document.getElementById("block").innerHTML = result;
-    btnEl1.remove();
-    btnEl2.remove();
-    btnEl3.remove();
-    btnEl4.remove();
+    
 }
 
 function setScore() {
@@ -66,10 +63,9 @@ function setScore() {
 
 function getScore() {
     var scoreName = `
-    <h2>` + localStorage.getItem("highscoreName") + `'s highscore is:</h2>
-    <h1>` + localStorage.getItem("highscore") + `</h1><br> 
+    <h2>` + localStorage.getItem("highscoreName") + ` highscore is: ` + localStorage.getItem("highscore") +`</h2>
     
-    <button onclick="location.reload();">Play Again</button>
+    <button onclick="location.reload();">Go back</button>
     
     `;
 
