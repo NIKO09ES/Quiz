@@ -13,7 +13,7 @@ var questions = [
     {
         question: "The condition in an if / else statement is enclosed with __________.",
         choices: ["1.quotes", "2.curly brackets", "3.parenthesis", "4.square brackets"],
-        answer: "3.parenthesis"
+        answer: "2.curly brackets"
     },
     {
         question: "Avery useful tool used during development and debugging for printing content to the debugger is:",
@@ -98,7 +98,7 @@ function questionClick() {
     console.log(questions[index].answer, this.value);
     if (this.value !== questions[index].answer) {
         timeLeft -= 15;
-        score -= 25;
+        score -= 15;
         console.log(score)
         if (timeLeft < 0) {
             timeLeft = 0;
@@ -131,7 +131,7 @@ var time = function () {
             clearInterval(timeInterval);
         }
 
-    }, 1000);
+    }, 500);
     document.getElementById("quiz").remove();
     document.getElementById("paragraph").remove();
     getQuestion();
